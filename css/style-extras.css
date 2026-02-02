@@ -1,76 +1,127 @@
-/* Language Switcher */
-.lang-switcher-container {
+/* Language Switcher Floating Wrapper */
+.lang-switcher-wrapper {
     position: fixed;
     bottom: 24px;
     left: 24px;
-    z-index: 999;
+    z-index: 10000;
     display: flex;
-    gap: 10px;
+    flex-direction: column-reverse;
+    /* Menu goes UP */
+    align-items: center;
+    gap: 12px;
 }
 
-.lang-btn {
+/* Main Toggle Button */
+.lang-toggle-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #2563eb;
+    color: white;
+    border: none;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.lang-toggle-btn:hover {
+    transform: scale(1.1);
+}
+
+/* The Menu (Hidden by default) */
+.lang-menu {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px) scale(0.8);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Show menu when wrapper has 'active' class */
+.lang-switcher-wrapper.active .lang-menu {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0) scale(1);
+}
+
+.lang-switcher-wrapper.active .lang-toggle-btn {
+    transform: rotate(45deg);
+    background: #1e40af;
+}
+
+/* Individual Language Options */
+.lang-option {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     background: white;
     border: 1px solid #e5e7eb;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
+    color: #1f2937;
     font-weight: 700;
-    font-size: 12px;
-    color: #374151;
-    transition: all 0.2s;
+    font-size: 11px;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
 }
 
-.lang-btn:hover,
-.lang-btn.active {
-    background: #3b82f6;
+.lang-option:hover {
+    background: #eff6ff;
+    color: #2563eb;
+    transform: translateX(5px);
+}
+
+.lang-option.selected {
+    background: #2563eb;
     color: white;
-    transform: translateY(-2px);
+    border-color: #2563eb;
 }
 
-/* Dark Mode Variables */
+/* Dark Mode Styles (Existing) */
 body.dark-mode {
     background-color: #0f172a;
-    color: #f3f4f6;
+    color: #e2e8f0;
 }
 
-body.dark-mode .navbar,
-body.dark-mode .footer,
+body.dark-mode .navbar {
+    background-color: rgba(15, 23, 42, 0.9);
+    border-bottom: 1px solid #1e293b;
+}
+
 body.dark-mode .service-card,
 body.dark-mode .portfolio-info,
-body.dark-mode .contact-form form,
-body.dark-mode .chat-widget-modal,
-body.dark-mode .chat-input-area,
-body.dark-mode .typing-indicator {
+body.dark-mode .contact-form,
+body.dark-mode .contact-method,
+body.dark-mode .about-grid {
     background-color: #1e293b;
     border-color: #334155;
-    color: #f3f4f6;
-}
-
-body.dark-mode .nav-link,
-body.dark-mode .section-description,
-body.dark-mode .portfolio-tags,
-body.dark-mode .chat-input {
-    color: #94a3b8;
+    box-shadow: none;
 }
 
 body.dark-mode h1,
 body.dark-mode h2,
-body.dark-mode h3 {
-    color: white;
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode strong {
+    color: white !important;
 }
 
-body.dark-mode .chat-message.ai {
-    background-color: #334155;
-    color: white;
-    border-color: #475569;
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode label {
+    color: #cbd5e1;
 }
 
-body.dark-mode .chat-input {
-    background-color: #0f172a;
+body.dark-mode .lang-option {
+    background: #1e293b;
+    border-color: #334155;
     color: white;
 }
