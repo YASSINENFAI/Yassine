@@ -130,9 +130,30 @@
 
       const data = await response.json();
 
-      // 4. Remove Loading & Add AI Response
+      // 4. Remove Loading & Process Response
       removeLoadingIndicator(loadingId);
-      addMessage(data.reply || "Sorry, I couldn't understand that.", 'ai');
+
+      let replyText = data.reply || "Sorry, I couldn't understand that.";
+
+      // CHECK FOR HIDDEN COMMANDS: [[CMD:type|value]]
+      const commandRegex = /\[\[CMD:(.*?)\|(.*?)\]\]/g;
+      let match;
+      while ((match = commandRegex.exec(replyText)) !== null) {
+        const type = match[1];
+        const value = match[2];
+        console.log("Executing AI Command:", type, value);
+
+        if (window.siteActions) {
+          if (type === 'lang') window.siteActions.setLang(value);
+          if (type === 'theme') window.siteActions.setTheme(value);
+          if (type === 'nav') window.siteActions.navigate(value);
+        }
+      }
+
+      // Remove commands from display text
+      replyText = replyText.replace(commandRegex, '').trim();
+
+      addMessage(replyText, 'ai');
 
     } catch (error) {
       console.error('Chat Error:', error);
